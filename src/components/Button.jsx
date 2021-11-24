@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 export default function Button(props) {
   return (
-    <button onClick={ props.handleClick }>
+    <button onClick={ props.handleClick } className={ props.className }>
       { props.btnText }
     </button>
   )
@@ -12,4 +12,5 @@ export default function Button(props) {
 Button.propTypes = {
   handleClick: PropTypes.func.isRequired,
   btnText: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
 }
