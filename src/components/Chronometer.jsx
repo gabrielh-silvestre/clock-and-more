@@ -31,11 +31,13 @@ function Chronometer(props) {
   }, [reset, hour]);
 
   return (
-    <section>
-      <h2>
-        <span>{hour < 10 ? `0${hour}` : hour}</span>
-        <span>{minute < 10 ? `0${minute}` : minute}</span>
-        <span>{second < 10 ? `0${second}` : second}</span>
+    <section className="flex justify-center text-gray-300">
+      <h2 className="text-5xl">
+        <span className="mx-2 font-bold">{hour < 10 ? `0${hour}` : hour}</span>
+        <span>:</span>
+        <span className="mx-2 font-bold">{minute < 10 ? `0${minute}` : minute}</span>
+        <span>:</span>
+        <span className="mx-2 font-bold">{second < 10 ? `0${second}` : second}</span>
       </h2>
     </section>
   );
