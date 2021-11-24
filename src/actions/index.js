@@ -4,3 +4,6 @@ export const decrement = (timeType) => ({ type: 'DECREMENT', timeType });
 
 export const reset = (timeType) => ({ type: 'RESET', timeType });
 
+export const enableChronometer = () => ({ type: 'ENABLE' });
+
+export const disableChronometer = () => ({ type: 'DISABLE' });
