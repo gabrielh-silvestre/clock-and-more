@@ -9,7 +9,7 @@ function Home(props) {
   const { increment } = props;
 
   function startRunning() {
-    setInterval(() => increment('second'), 1);
+    setInterval(() => increment('second'), 1000);
   }
 
   return (
