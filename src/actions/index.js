@@ -1,3 +1,6 @@
-export const increment = (timeType, timeValue) => ({ type: 'INCREMENT', payload: { timeType, timeValue } });
+export const increment = (timeType) => ({ type: 'INCREMENT', timeType });
 
-export const decreament = (timeType, timeValue) => ({ type: 'DECREMENT', payload: { timeType, timeValue } });
+export const decrement = (timeType) => ({ type: 'DECREMENT', timeType });
+
+export const reset = (timeType) => ({ type: 'RESET', timeType });
+

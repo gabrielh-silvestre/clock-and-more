@@ -10,6 +10,8 @@ export default function timeReducer(state = INITIAL_STATE, action) {
       return { ...state, [action.timeType]: (state[action.timeType] += 1) };
     case 'DECREMENT':
       return { ...state, [action.timeType]: (state[action.timeType] -= 1) };
+    case 'RESET':
+      return { ...state, [action.timeType]: (state[action.timeType] = 0) };
     default:
       return state;
   }
