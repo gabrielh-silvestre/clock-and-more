@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import { increment } from '../actions';
+import { disableChronometer, enableChronometer, increment } from '../actions';
 import Chronometer from '../components/Chronometer';
 import Button from '../components/Button';
 
 function Home(props) {
-  const { increment } = props;
+  const { increment, enableChronometer, disableChronometer, isActive } = props;
+
+  const [intervalId, setIntervalId] = useState(null);
 
   function startRunning() {
-    setInterval(() => increment('second'), 1000);
+    if (isActive) {
+      clearInterval(intervalId);
+      disableChronometer();
+    } else {
+      const interval = setInterval(() => increment('second'), 1000);
+      setIntervalId(interval);
+      enableChronometer();
+    }
   }
 
   return (
@@ -20,8 +29,14 @@ function Home(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  increment: (timeType) => dispatch(increment(timeType)),
+const mapStateToProps = (state) => ({
+  isActive: state.chronometer,
 });
 
-export default connect(null, mapDispatchToProps)(Home);
+const mapDispatchToProps = (dispatch) => ({
+  increment: (timeType) => dispatch(increment(timeType)),
+  enableChronometer: () => dispatch(enableChronometer()),
+  disableChronometer: () => dispatch(disableChronometer()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
