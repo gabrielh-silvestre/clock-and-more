@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { disableChronometer, enableChronometer, increment } from '../actions';
 import Chronometer from '../components/Chronometer';
 import Button from '../components/Button';
+import Play from '../icons/Play';
+import Pause from '../icons/Pause';
 
 function Home(props) {
   const { increment, enableChronometer, disableChronometer, isActive } = props;
@@ -26,9 +28,11 @@ function Home(props) {
       <Chronometer />
       <Button
         handleClick={startRunning}
-        btnText="Start"
-        className="bg-blue-900 px-6 py-1 rounded-xl text-xl text-gray-300 mt-4"
-      />
+        className="flex bg-blue-900 px-6 py-1 rounded-xl text-xl text-gray-300 mt-4"
+      >
+        <Pause />
+        <Play />
+      </Button>
     </main>
   );
 }
