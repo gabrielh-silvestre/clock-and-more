@@ -22,9 +22,13 @@ function Home(props) {
   }
 
   return (
-    <main>
+    <main className="h-screen flex flex-col items-center justify-center">
       <Chronometer />
-      <Button handleClick={startRunning} btnText="Start" />
+      <Button
+        handleClick={startRunning}
+        btnText="Start"
+        className="bg-blue-900 px-6 py-1 rounded-xl text-xl text-gray-300 mt-4"
+      />
     </main>
   );
 }
