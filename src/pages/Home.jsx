@@ -9,9 +9,9 @@ import {
 } from '../actions';
 import Chronometer from '../components/Chronometer';
 import Button from '../components/Button';
-import Play from '../icons/Play';
-import Pause from '../icons/Pause';
-import Stop from '../icons/Stop';
+import Play from '../components/icons/Play';
+import Pause from '../components/icons/Pause';
+import Stop from '../components/icons/Stop';
 
 function Home(props) {
   const { reset, increment, enableChronometer, disableChronometer, isActive } =
