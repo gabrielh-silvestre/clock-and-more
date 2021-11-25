@@ -1,7 +1,7 @@
 import { disableRun, enableRun, decrement } from './index';
 import store from '../store';
 
-export function reverseRun(action, isRunning = false, intervalId) {
+export function reverseRun(isRunning = false, intervalId) {
   if (isRunning) {
     clearInterval(intervalId);
     return disableRun();
