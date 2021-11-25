@@ -1,12 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
-import {
-  disableChronometer,
-  enableChronometer,
-  increment,
-  reset,
-} from '../actions';
+import { normalRun } from '../actions/chronometerActions';
+
 import Chronometer from '../components/Chronometer';
 import Button from '../components/Button';
 import Play from '../components/icons/Play';
@@ -14,42 +10,23 @@ import Pause from '../components/icons/Pause';
 import Stop from '../components/icons/Stop';
 
 function Home(props) {
-  const { reset, increment, enableChronometer, disableChronometer, isActive } =
-    props;
-
-  const [intervalId, setIntervalId] = useState(null);
-
-  function startRunning() {
-    if (isActive) {
-      clearInterval(intervalId);
-      disableChronometer();
-    } else {
-      const interval = setInterval(() => increment('second'), 1000);
-      setIntervalId(interval);
-      enableChronometer();
-    }
-  }
-
-  function resetRunning() {
-    clearInterval(intervalId);
-    disableChronometer();
-    reset('second');
-    reset('minute');
-    reset('hour');
-  }
+  const {
+    normalRun,
+    timeStats: { isActive, intervalId },
+  } = props;
 
   return (
     <main className="h-screen flex flex-col items-center justify-center">
       <Chronometer />
       <Button
-        handleClick={startRunning}
+        handleClick={() => normalRun(isActive, intervalId)}
         className="flex bg-blue-900 px-6 py-1 rounded-xl text-xl text-gray-300 mt-4"
       >
         <Pause />
         <Play />
       </Button>
       <Button
-        handleClick={resetRunning}
+        handleClick={() => console.log('trem')}
         className="flex bg-blue-900 px-6 py-1 rounded-xl text-xl text-gray-300 mt-4"
       >
         <Stop />
@@ -59,14 +36,12 @@ function Home(props) {
 }
 
 const mapStateToProps = (state) => ({
-  isActive: state.chronometer,
+  timeStats: state.chronometer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  reset: (timeType) => dispatch(reset(timeType)),
-  increment: (timeType) => dispatch(increment(timeType)),
-  enableChronometer: () => dispatch(enableChronometer()),
-  disableChronometer: () => dispatch(disableChronometer()),
+  normalRun: (isRunning, intervalId) =>
+    dispatch(normalRun(isRunning, intervalId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
