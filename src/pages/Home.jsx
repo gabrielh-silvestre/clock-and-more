@@ -8,7 +8,7 @@ export default function Home() {
     <div className="h-full w-full flex justify-center items-center">
       <BrowserRouter>
         <Switch>
-          <Route path="/" component={Chronometer} />
+          <Route exact path="/" component={Chronometer} />
         </Switch>
       </BrowserRouter>
     </div>
