@@ -1,13 +1,22 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
+import { normalRun } from '../actions/chronometerActions';
 import { increment, reset } from '../actions';
+
+import Clock from './Clock';
+import Button from './Button';
+import Pause from './icons/Pause';
+import Play from './icons/Play';
+import Stop from './icons/Stop';
 
 function Chronometer(props) {
   const {
     reset,
     increment,
+    normalRun,
     time: { second, minute, hour },
+    timeStats: { isActive, intervalId },
   } = props;
 
   useEffect(() => {
@@ -31,25 +40,37 @@ function Chronometer(props) {
   }, [reset, hour]);
 
   return (
-    <section className="flex justify-center text-gray-300">
-      <h2 className="text-5xl">
-        <span className="mx-2 font-bold">{hour < 10 ? `0${hour}` : hour}</span>
-        <span>:</span>
-        <span className="mx-2 font-bold">{minute < 10 ? `0${minute}` : minute}</span>
-        <span>:</span>
-        <span className="mx-2 font-bold">{second < 10 ? `0${second}` : second}</span>
-      </h2>
-    </section>
+    <article className="flex flex-col items-center">
+      <Clock />
+      <div className="flex justify-between">
+        <Button
+          handleClick={() => normalRun(isActive, intervalId)}
+          className="flex bg-blue-900 px-6 py-1 rounded-xl text-xl text-gray-300 mt-4 mr-4"
+        >
+          <Pause />
+          <Play />
+        </Button>
+        <Button
+          handleClick={() => console.log('trem')}
+          className="flex bg-blue-900 px-6 py-1 rounded-xl text-xl text-gray-300 mt-4"
+        >
+          <Stop />
+        </Button>
+      </div>
+    </article>
   );
 }
 
 const mapStateToProps = (state) => ({
   time: state.time,
+  timeStats: state.chronometer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  reset: (timeType) => dispatch(reset(timeType)),
   increment: (timeType) => dispatch(increment(timeType)),
+  reset: (timeType) => dispatch(reset(timeType)),
+  normalRun: (isRunning, intervalId) =>
+    dispatch(normalRun(isRunning, intervalId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chronometer);
