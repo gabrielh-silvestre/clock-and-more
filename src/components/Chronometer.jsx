@@ -34,7 +34,7 @@ function Chronometer(props) {
   }, [increment, reset, minute]);
 
   function resetChronometer() {
-    normalRun(true);
+    normalRun(true, intervalId);
     reset('hour');
     reset('minute');
     reset('second');
