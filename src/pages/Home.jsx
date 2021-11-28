@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import Chronometer from '../components/Chronometer';
+import Timer from '../components/Timer';
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Chronometer} />
+          <Route path="/timer" component={Timer} />
         </Switch>
       </BrowserRouter>
     </div>
