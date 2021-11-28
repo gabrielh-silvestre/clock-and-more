@@ -15,7 +15,7 @@ function Chronometer(props) {
     reset,
     increment,
     normalRun,
-    time: { second, minute, hour },
+    time: { second, minute },
     timeStats: { isActive, intervalId },
   } = props;
 
@@ -32,12 +32,6 @@ function Chronometer(props) {
       increment('hour');
     }
   }, [increment, reset, minute]);
-
-  useEffect(() => {
-    if (hour > 23) {
-      reset('hour');
-    }
-  }, [reset, hour]);
 
   function resetChronometer() {
     normalRun(isActive, intervalId);
