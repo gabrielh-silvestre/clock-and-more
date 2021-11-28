@@ -6,8 +6,20 @@ import { setTime } from '../actions';
 function Time(props) {
   const { timeValue, timeType, setTime } = props;
 
-  function handleChange({ target: { value }}) {
-    setTime(timeType, Number(value));
+  function handleChange({ target: { value } }) {
+    if (timeType === 'minute' || timeType === 'second') {
+      let timeLimit = 0;
+
+      if (value > 59) timeLimit = 0;
+      else if (value < 0) timeLimit = 59;
+      else timeLimit = value;
+
+      setTime(timeType, Number(timeLimit));
+    }
+
+    if (timeType === 'hour') {
+      setTime(timeType, Number(value < 0 ? 0 : value));
+    }
   }
 
   return (
@@ -17,7 +29,7 @@ function Time(props) {
       id={timeType}
       className="w-full flex text-center bg-gray-800 outline-none"
       value={timeValue < 10 ? `0${timeValue}` : timeValue}
-      onChange={ handleChange }
+      onChange={handleChange}
     />
   );
 }
