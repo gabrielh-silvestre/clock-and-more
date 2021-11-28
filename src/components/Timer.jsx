@@ -9,6 +9,7 @@ import Button from './Button';
 import Pause from './icons/Pause';
 import Play from './icons/Play';
 import Stop from './icons/Stop';
+import Header from './Header';
 
 function Timer(props) {
   const {
@@ -48,6 +49,7 @@ function Timer(props) {
 
   return (
     <article className="flex flex-col items-center">
+      <Header tool="Timer" />
       <Clock />
       <div className="flex justify-between">
         <Button
