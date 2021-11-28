@@ -4,7 +4,12 @@ import { connect } from 'react-redux';
 import { setTime } from '../actions';
 
 function Time(props) {
-  const { timeValue, timeType, setTime } = props;
+  const {
+    timeValue,
+    timeType,
+    setTime,
+    runStats: { isActive },
+  } = props;
 
   function handleChange({ target: { value } }) {
     if (timeType === 'minute' || timeType === 'second') {
@@ -29,10 +34,15 @@ function Time(props) {
       id={timeType}
       className="w-full flex text-center bg-gray-800 outline-none"
       value={timeValue < 10 ? `0${timeValue}` : timeValue}
+      disabled={ isActive }
       onChange={handleChange}
     />
   );
 }
+
+const mapStateToProps = (state) => ({
+  runStats: state.chronometer,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   setTime: (timeType, timeValue) => dispatch(setTime(timeType, timeValue)),
@@ -44,4 +54,4 @@ Time.propTypes = {
   setTime: PropTypes.func.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Time);
+export default connect(mapStateToProps, mapDispatchToProps)(Time);
