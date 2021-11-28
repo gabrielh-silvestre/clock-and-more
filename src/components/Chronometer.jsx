@@ -39,6 +39,13 @@ function Chronometer(props) {
     }
   }, [reset, hour]);
 
+  function resetChronometer() {
+    normalRun(isActive, intervalId);
+    reset('hour');
+    reset('minute');
+    reset('second');
+  }
+
   return (
     <article className="flex flex-col items-center">
       <Clock />
@@ -51,7 +58,7 @@ function Chronometer(props) {
           <Play />
         </Button>
         <Button
-          handleClick={() => console.log('trem')}
+          handleClick={ resetChronometer }
           className="flex bg-blue-900 px-6 py-1 rounded-xl text-xl text-gray-300 mt-4"
         >
           <Stop />
