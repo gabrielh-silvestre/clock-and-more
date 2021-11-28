@@ -15,6 +15,7 @@ function Time(props) {
       type="number"
       name={timeType}
       id={timeType}
+      className="w-full flex text-center bg-gray-800 outline-none"
       value={timeValue < 10 ? `0${timeValue}` : timeValue}
       onChange={ handleChange }
     />
