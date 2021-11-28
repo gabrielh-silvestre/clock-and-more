@@ -10,13 +10,13 @@ function Clock(props) {
 
   return (
     <section className="flex justify-center text-gray-300">
-      <h2 className="text-5xl">
-        <Time timeValue={hour} />
+      <div className="w-4/12 flex text-5xl">
+        <Time timeValue={hour} timeType={'hour'} />
         <span>:</span>
-        <Time timeValue={minute} />
+        <Time timeValue={minute} timeType={'minute'} />
         <span>:</span>
-        <Time timeValue={second} />
-      </h2>
+        <Time timeValue={second} timeType={'second'} />
+      </div>
     </section>
   );
 }

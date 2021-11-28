@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { normalRun } from '../actions/chronometerActions';
-import { increment, reset } from '../actions';
+import { reverseRun } from '../actions/timerActions';
+import { decrement, reset, startOver } from '../actions';
 
 import Clock from './Clock';
 import Button from './Button';
@@ -10,31 +10,37 @@ import Pause from './icons/Pause';
 import Play from './icons/Play';
 import Stop from './icons/Stop';
 
-function Chronometer(props) {
+function Timer(props) {
   const {
+    startOver,
+    decrement,
     reset,
-    increment,
-    normalRun,
-    time: { second, minute },
+    reverseRun,
+    time: { second, minute, hour },
     timeStats: { isActive, intervalId },
   } = props;
 
   useEffect(() => {
-    if (second === 60) {
-      reset('second');
-      increment('minute');
+    if (second < 0) {
+      if (minute >= 1) {
+        decrement('minute');
+        startOver('second');
+      }
+  
+      if (minute === 0 && hour >= 1) {
+        decrement('hour');
+        startOver('minute');
+        startOver('second');
+      }
+  
+      if (minute === 0 && hour === 0) {
+        resetTimer();
+      }
     }
-  }, [increment, reset, second]);
+  }, [second]);
 
-  useEffect(() => {
-    if (minute === 60) {
-      reset('minute');
-      increment('hour');
-    }
-  }, [increment, reset, minute]);
-
-  function resetChronometer() {
-    normalRun(true, intervalId);
+  function resetTimer() {
+    reverseRun(isActive, intervalId);
     reset('hour');
     reset('minute');
     reset('second');
@@ -45,14 +51,14 @@ function Chronometer(props) {
       <Clock />
       <div className="flex justify-between">
         <Button
-          handleClick={() => normalRun(isActive, intervalId)}
+          handleClick={() => reverseRun(isActive, intervalId)}
           className="flex bg-blue-900 px-6 py-1 rounded-xl text-xl text-gray-300 mt-4 mr-4"
         >
           <Pause />
           <Play />
         </Button>
         <Button
-          handleClick={ resetChronometer }
+          handleClick={ resetTimer }
           className="flex bg-blue-900 px-6 py-1 rounded-xl text-xl text-gray-300 mt-4"
         >
           <Stop />
@@ -68,10 +74,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  increment: (timeType) => dispatch(increment(timeType)),
+  decrement: (timeType) => dispatch(decrement(timeType)),
+  startOver: (timeType) => dispatch(startOver(timeType)),
   reset: (timeType) => dispatch(reset(timeType)),
-  normalRun: (isRunning, intervalId) =>
-    dispatch(normalRun(isRunning, intervalId)),
+  reverseRun: (isRunning, intervalId) =>
+    dispatch(reverseRun(isRunning, intervalId)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Chronometer);
+export default connect(mapStateToProps, mapDispatchToProps)(Timer);
